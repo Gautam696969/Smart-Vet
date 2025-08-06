@@ -1,0 +1,48 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar"
+  },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "patients": "Pacientes",
+    "appointments": "Citas",
+    "inventory": "Inventario",
+    "reports": "Reportes",
+    "settings": "Configuración"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar Sesión"
+  },
+  "patients": {
+    "title": "Pacientes",
+    "addPatient": "Agregar Paciente",
+    "patientName": "Nombre del Paciente",
+    "ownerName": "Nombre del Propietario",
+    "species": "Especie",
+    "breed": "Raza",
+    "age": "Edad",
+    "weight": "Peso"
+  },
+  "appointments": {
+    "title": "Citas",
+    "scheduleAppointment": "Programar Cita",
+    "date": "Fecha",
+    "time": "Hora",
+    "reason": "Motivo",
+    "status": "Estado"
+  }
+}

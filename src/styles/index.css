@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+::selection {
+    color: #fff;
+    background: #eb5c1e;
+}
+
+::-moz-selection {
+    color: #fff;
+    background: #eb5c1e;
+}
+:root {
+  /* Custom Smart Vet Palette */
+  --flamingo: #e65100;
+  /* --ebony-clay: #242c3c; */
+  --ebony-clay: #111827;
+  --silver: #cdc6c6;
+  --raven: #727885;
+  --mid-gray: #5c5c6c;
+  --regent-gray: #8c949c;
+  --manatee: #8c94a4;
+  --trout: #4b5362;
+  --shuttle-gray: #545c6c;
+  --gun-powder: #444454;
+}
+
+/* Login Page Custom Styles */
