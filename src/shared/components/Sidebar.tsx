@@ -51,7 +51,7 @@ const navSections = [
       { to: '/clients', label: 'Clients', icon: <AssignmentIndOutlined /> },
       { to: '/services', label: 'Services', icon: <DeviceHubOutlined /> },
 
-       { to: '//location', label: 'Location', icon: <IoLocationOutline /> },
+       { to: '/myLocation', label: 'My Location', icon: <IoLocationOutline /> },
 
       {
         to: '/appointments/history',

@@ -62,7 +62,7 @@ const CreateServiceCategoryPage: React.FC = () => {
       <div className="w-full px-6 py-8">
         <div className="w-full">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div className="p-8">
+          <div   className="p-8">
               {/* Category Details */}
               <div className="mb-12">
                 <h2 className="text-2xl font-bold text-[#145824] dark:text-green-400 mb-6">

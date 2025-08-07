@@ -39,7 +39,7 @@ import useAuthGuard from 'shared/utils/refreshToken'
 import { verifyToken } from 'shared/utils/graphqlFetch'
 import Loader from 'shared/components/Loader'
 import { clearAuthData } from 'shared/utils/authStorage'
-import Location from 'features/location/Location'
+import MyLocation from 'features/location/pages/Location'
 
 // Theme toggle button component
 const ThemeToggleButton: React.FC = () => {
@@ -267,10 +267,10 @@ const AppRouter: React.FC = () => {
 
 
                 <Route
-                path="/location"
+                path="/myLocation"
                 element={
                   <SidebarLayout onLogout={handleLogout}>
-                    <Location />
+                    <MyLocation />
                   </SidebarLayout>
                 }
               />
