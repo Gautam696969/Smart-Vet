@@ -41,6 +41,10 @@ import Loader from 'shared/components/Loader'
 import { clearAuthData } from 'shared/utils/authStorage'
 import MyLocation from 'features/location/pages/Location'
 
+import Employees from 'features/employee/Employees'
+import Emp from 'features/employee/Emp'
+
+
 // Theme toggle button component
 const ThemeToggleButton: React.FC = () => {
   const { theme, toggleTheme } = useTheme()
@@ -91,22 +95,22 @@ const ThemeToggleButton: React.FC = () => {
 }
 
 const AppRouter: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const isMountedRef = useRef(true)
+  const [isAuthenticated, setIsAuthenticated] = useState( false )
+  const [isLoading, setIsLoading] = useState( true )
+  const isMountedRef = useRef( true )
 
-  useEffect(() => {
+  useEffect( () => {
     const checkToken = async () => {
 
 
       // Check for authToken in localStorage for session persistence
-      const token = localStorage.getItem('authToken')
+      const token = localStorage.getItem( 'authToken' )
 
-      if (!token) {
+      if ( !token ) {
 
-        if (isMountedRef.current) {
-          setIsAuthenticated(false)
-          setIsLoading(false)
+        if ( isMountedRef.current ) {
+          setIsAuthenticated( false )
+          setIsLoading( false )
         }
         return
       }
@@ -114,31 +118,31 @@ const AppRouter: React.FC = () => {
 
 
       try {
-        const res = await verifyToken(token)
+        const res = await verifyToken( token )
 
 
         // Check if component is still mounted before updating state
-        if (!isMountedRef.current) return
+        if ( !isMountedRef.current ) return
 
-        if (res?.data?.verifyToken?.status === 200) {
-          console.log('Token is valid')
-          setIsAuthenticated(true)
+        if ( res?.data?.verifyToken?.status === 200 ) {
+          console.log( 'Token is valid' )
+          setIsAuthenticated( true )
         } else {
-          console.log('Token is invalid')
-          setIsAuthenticated(false)
+          console.log( 'Token is invalid' )
+          setIsAuthenticated( false )
           // Clear invalid token
           clearAuthData()
         }
-      } catch (error) {
-        console.error('Token verification failed:', error)
-        if (isMountedRef.current) {
-          setIsAuthenticated(false)
+      } catch ( error ) {
+        console.error( 'Token verification failed:', error )
+        if ( isMountedRef.current ) {
+          setIsAuthenticated( false )
           // Clear token on error
           clearAuthData()
         }
       } finally {
-        if (isMountedRef.current) {
-          setIsLoading(false)
+        if ( isMountedRef.current ) {
+          setIsLoading( false )
 
         }
       }
@@ -150,19 +154,19 @@ const AppRouter: React.FC = () => {
     return () => {
       isMountedRef.current = false
     }
-  }, [])
+  }, [] )
 
   const handleLogout = () => {
     clearAuthData()
-    setIsAuthenticated(false)
+    setIsAuthenticated( false )
   }
 
   const handleLoginSuccess = () => {
-    setIsAuthenticated(true)
+    setIsAuthenticated( true )
   }
 
 
-  if (isLoading) {
+  if ( isLoading ) {
     return (
       <ThemeProvider>
         <Loader />
@@ -256,6 +260,23 @@ const AppRouter: React.FC = () => {
                 }
               />
 
+
+              <Route
+                path="/employees"
+                element={
+                  <SidebarLayout onLogout={handleLogout}>
+                    <Employees />
+                  </SidebarLayout>
+                }
+              />
+              <Route
+                path="/employees/:id"
+                element= {
+                    <SidebarLayout onLogout={handleLogout}>
+                    <AdminDashboard />
+                  </SidebarLayout>
+                }
+              />
               <Route
                 path="/admin-dashboard"
                 element={
@@ -266,7 +287,7 @@ const AppRouter: React.FC = () => {
               />
 
 
-                <Route
+              <Route
                 path="/myLocation"
                 element={
                   <SidebarLayout onLogout={handleLogout}>
@@ -316,121 +337,121 @@ const AppRouter: React.FC = () => {
               }
             />
           )}
-           {isAuthenticated && (
-          <Route
-            path="/messages"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <MessagesPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-         {isAuthenticated && (
-          <Route
-            path="/messages/:messageId"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <MessagesInfoPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/clients"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <ClientsPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/clients/:id"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <ClientInfo />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/clients/:id"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <ClientInfo />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/clients/:id/edit"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <ClientEditPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/services"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <ServicePage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/services/create"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <CreateServicePage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/services/edit/:id"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <CreateServicePage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/services-categories/create"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <CreateServiceCategoryPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {isAuthenticated && (
-          <Route
-            path="/services-categories/edit/:id"
-            element={
-              <SidebarLayout onLogout={handleLogout}>
-                <CreateServiceCategoryPage />
-              </SidebarLayout>
-            }
-          />
-        )}
-        {/* /service-categories/create */}
-        {/* Device Test Route */}
-        {isAuthenticated && (
-          <Route
-            path="/device-test"
+          {isAuthenticated && (
+            <Route
+              path="/messages"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <MessagesPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/messages/:messageId"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <MessagesInfoPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/clients"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <ClientsPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/clients/:id"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <ClientInfo />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/clients/:id"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <ClientInfo />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/clients/:id/edit"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <ClientEditPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/services"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <ServicePage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/services/create"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <CreateServicePage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/services/edit/:id"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <CreateServicePage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/services-categories/create"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <CreateServiceCategoryPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              path="/services-categories/edit/:id"
+              element={
+                <SidebarLayout onLogout={handleLogout}>
+                  <CreateServiceCategoryPage />
+                </SidebarLayout>
+              }
+            />
+          )}
+          {/* /service-categories/create */}
+          {/* Device Test Route */}
+          {isAuthenticated && (
+            <Route
+              path="/device-test"
               element={
                 <SidebarLayout onLogout={handleLogout}>
                   <DeviceTestScreen />

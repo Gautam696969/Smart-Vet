@@ -1,6 +1,7 @@
 
+import React from 'react'
 
-import ClinicsPage from './ClinicPage'
+import ClinicsPage from './ClinicBtn'
 
 function MyLocation() {
   return (

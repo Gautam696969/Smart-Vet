@@ -47,11 +47,14 @@ const navSections = [
       { to: '/device-test', label: 'Device Test', icon: <FiVideo /> },
       { to: '/book-appointment', label: 'Book Appointment', icon: <FiUsers /> },
       { to: '/chat', label: 'Chat', icon: <FiInfo /> },
+
+      { to: '/employees', label: 'Employees', icon: <FiInfo /> },
+
       { to: '/messages', label: 'Messages', icon: <QuestionAnswerOutlined /> },
       { to: '/clients', label: 'Clients', icon: <AssignmentIndOutlined /> },
       { to: '/services', label: 'Services', icon: <DeviceHubOutlined /> },
 
-       { to: '/myLocation', label: 'My Location', icon: <IoLocationOutline /> },
+      { to: '/myLocation', label: 'My Location', icon: <IoLocationOutline /> },
 
       {
         to: '/appointments/history',

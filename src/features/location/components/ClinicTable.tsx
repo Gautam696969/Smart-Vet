@@ -1,88 +1,114 @@
 import React, { useEffect, useState } from "react";
-import { fetchClinics } from "../api/Clinics";
+import axios from "axios";
 import { Clinic } from "../types/types";
+import TablePagination from '@mui/material/TablePagination';
 
 const ClinicTable: React.FC = () => {
-  const [clinics, setClinics] = useState<Clinic[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [clinics, setClinics] = useState<Clinic[]>( [] );
+  const [currentPage, setCurrentPage] = useState( 1 );
+  const [totalPages, setTotalPages] = useState( 1 );
+  const [loading, setLoading] = useState( true );
+  const [page, setPage] = React.useState( 2 );
+  const [rowsPerPage, setRowsPerPage] = React.useState( 10 );
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage( newPage );
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRowsPerPage( parseInt( event.target.value, 10 ) );
+    setPage( 0 );
+  };
 
   const getData = async () => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetchClinics(currentPage, token);
+    setLoading( true );
 
-      setClinics(res.data.clinics || []);
-      setTotalPages(res.data.totalPages || 1);
-    } catch (err) {
-      console.error("Error fetching clinics:", err);
+    try {
+      localStorage.getItem( `eyJpdiI6ImVhY1BpSzJMWGozVDNkTmltSDJJdVE9PSIsInZhbHVlIjoiazBvdXNVeUxOeU9VeXRvSVl5ejJaeGRnMC8razl4d2s3WmVLNS85RlRRa1RmVVVNek9NczZFNW8xQTltdU1CakxqTTdKc1ltZ2hGWk9sVzMwWDJJRm5oZGZRYTRuNUlVenVwanl6cXVrYi9PdTIrOEZLWG5nMEFDM2RjVFV2NW8iLCJtYWMiOiI4NDFiM2Q3ZDM1NGI3ZjA2Njk2MWNiYTA5NDVlMzIwOTQ0ZDM0MDIwMjcwNzhjYzkxOGRjYzE4NmQ5NTY5Y2IxIiwidGFnIjoiIn0%3D` );
+      const res = await axios.get( `/api/clinics?page=${currentPage}` );
+      console.log( res, "api data" );
+      setClinics( res.data.clinics || [] );
+      setTotalPages( res.data.totalPages || 1 );
+      console.log( res, "api data" );
+    } catch ( err ) {
+      setClinics( [] );
+
     } finally {
-      setLoading(false);
+      setLoading( false );
     }
   };
 
-  useEffect(() => {
+  useEffect( () => {
     getData();
-  }, [currentPage]);
+  }, [currentPage] );
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div className="mt-5 px-2 sm:px-4">
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center text-lg font-medium">Loading...</p>
       ) : (
         <>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ textAlign: "left", borderBottom: "2px solid #ccc", color: 'white' }}>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clinics.map((clinic) => (
-                <tr key={clinic.id} style={{ borderBottom: "1px solid #eee" }}>
-                  <td>{clinic.name}</td>
-                  <td>{clinic.email}</td>
-                  <td>{clinic.phone}</td>
-                  <td>{clinic.address}</td>
-                  <td>
-                    {clinic.status === "Featured" && (
-                      <span
-                        style={{
-                          backgroundColor: "orange",
-                          color: "white",
-                          padding: "4px 10px",
-                          borderRadius: "20px",
-                        }}
-                      >
-                        Featured ⭐
-                      </span>
-                    )}
-                  </td>
-                  <td>
-                    <span style={{ color: "crimson", cursor: "pointer", marginRight: "10px" }}>🗑️</span>
-                    <span style={{ color: "teal", cursor: "pointer" }}>✏️</span>
-                  </td>
+          <div className="w-full overflow-x-auto rounded-md shadow-sm bg-white dark:bg-gray-900">
+            <table className="min-w-[600px] w-full table-auto border-collapse">
+              <thead>
+                <tr className="text-left border border-gray-500 ">
+                  <th className="p-3 font-normal text-sm text-gray-600">Name</th>
+                  <th className="p-3 font-normal text-sm text-gray-600">Email</th>
+                  <th className="p-3 font-normal text-sm text-gray-600">Phone</th>
+                  <th className="p-3 font-normal text-sm text-gray-600">Address</th>
+                  <th className="p-3 font-normal text-sm text-gray-600">Status</th>
+                  <th className="p-3 font-normal text-sm text-gray-600">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                <tr className="text-left border border-gray-500">
+                  <th className="p-3 font-normal">Pal Gautam</th>
+                  <th className="p-3 font-normal">palgautam69@gmail.com</th>
+                  <th className="p-3 font-normal">0953737583</th>
+                  <th className="p-3 font-normal">AJI Dem, Rajkot</th>
+                  <th className="p-3 font-normal"></th>
+                  <th className="p-3 font-normal">
+                    <td className="p-3 space-x-2">
+                      <span className="text-red-600 hover:text-red-800 cursor-pointer text-lg">🗑️</span>
+                      <span className="text-teal-600 hover:text-teal-800 cursor-pointer text-lg">✏️</span>
+                    </td>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
 
           {/* Pagination Controls */}
-          <div style={{ marginTop: "15px", textAlign: "right", color: 'white' }}>
-            <span style={{ marginRight: "10px" }}>Page {currentPage} of {totalPages}</span>
-            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
-              ◀
-            </button>
-            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
-              ▶
-            </button>
+          <div className="mt-4 flex flex-col sm:flex-row justify-end items-center space-y-2 sm:space-y-0 sm:space-x-4 text-white">
+            <TablePagination
+              component="div"
+              count={100}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                '& .MuiTablePagination-toolbar': {
+                  color: 'grey',
+                },
+                '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                  color: 'grey',
+                },
+                '& .MuiSelect-icon': {
+                  color: 'grey',
+                },
+                '& .MuiPaginationItem-root': {
+                  color: 'grey',
+                },
+                '& .Mui-selected': {
+                  backgroundColor: '#1f2937 !important',
+                  color: '#00ffff',
+                },
+              }}
+            />
           </div>
         </>
       )}

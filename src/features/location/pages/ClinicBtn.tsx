@@ -4,14 +4,14 @@ import ClinicTable from "../components/ClinicTable";
 import ClinicModal from "../components/ClinicModel";
 
 const ClinicsPage: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState( false );
 
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
+  const handleOpenModal = () => setModalOpen( true );
+  const handleCloseModal = () => setModalOpen( false );
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h1 style={{ color: "orange" , fontSize: "32px" }}>Clinics</h1>
+      <h1 style={{ color: "orange" }}>Clinics</h1>
       <p className="text-gray-600">Clinics allow you to group your professionals based on location.</p>
       <button
         style={{
