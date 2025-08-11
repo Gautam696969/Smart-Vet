@@ -273,7 +273,7 @@ const AppRouter: React.FC = () => {
                 path="/employees/:id"
                 element= {
                     <SidebarLayout onLogout={handleLogout}>
-                    <AdminDashboard />
+                    <Emp />
                   </SidebarLayout>
                 }
               />

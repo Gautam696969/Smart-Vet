@@ -26,7 +26,7 @@ const ClinicModal: React.FC<Props> = ( { isOpen, onClose, onSubmitSuccess } ) =>
   const handleSubmit = ( e: React.FormEvent ) => {
     e.preventDefault();
 
-    // 💡 Normally yahan API call hoti hai
+
     const newClinic = { ...formData, id: Date.now() }; // temp ID
     onSubmitSuccess( newClinic ); // send data to parent
     onClose(); // close modal
@@ -36,7 +36,7 @@ const ClinicModal: React.FC<Props> = ( { isOpen, onClose, onSubmitSuccess } ) =>
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 transition: all 0.3s ease-in-out;">
-      <div className="bg-white p-6 rounded-lg w-full max-w-lg">
+      <div className="bg-white p-6 rounded-lg w-full max-w-lg"> 
         <h2 className="text-xl font-semibold mb-4">New Clinic</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <input

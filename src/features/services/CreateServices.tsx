@@ -413,7 +413,7 @@ const CreateServicePage: React.FC = () => {
                         render={({ field }) => (
                           <select
                             {...field}
-                            className={`w-full px-4 py-3 border ${
+                             className={`w-full px-4 py-3 border ${
                               errors.type
                                 ? 'border-red-300 dark:border-red-600'
                                 : 'border-gray-300 dark:border-gray-600'

@@ -5,7 +5,7 @@ const authLogin = `mutation Login($email: String!, $password: String!) {
         message
         refreshToken
         status
-        user {            
+        user {
             email
             firstName
             fullName
@@ -77,13 +77,55 @@ const resetpassword = `query ResetPassword($newPassword: String!) {
     }
 }
 `
+const getClient = `
+query GetClient(
+  $tenantId: Int!,
+  $isDeleted: Boolean!,
+  $pageNumber: Int!,
+  $pageSize: Int!,
+  $searchFor: String!
+) {
+  getClient(
+    tenantId: $tenantId,
+    isDeleted: $isDeleted,  
+    pageNumber: $pageNumber,
+    pageSize: $pageSize,
+    searchFor: $searchFor
+  ) {
+    errorCode
+    errorMessage
+    message
+    status
+    totalCount
+    data {
+      address_id
+      created_at
+      deleted_at
+      first_name
+      id
+      last_name
+      name
+      timezone
+      phone_number
+      phone_number_country_code
+      tenant_id
+      updated_at
+      user_id
+      email
+    }
+  }
+}
+`;
 
 const Auth = {
   authLogin,
   forgetPassword,
   signup,
   verifyToken,
-  resetpassword
+  resetpassword,
+  getClient
 }
 
 export default Auth
+
+

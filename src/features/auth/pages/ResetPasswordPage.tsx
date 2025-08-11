@@ -12,11 +12,8 @@ const ResetPasswordPage: React.FC = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    
     e.preventDefault()
     setMessage('')
     setError('')
@@ -25,7 +22,7 @@ const ResetPasswordPage: React.FC = () => {
       setError('Invalid or missing reset token.')
       return
     }
-    if (!newPassword || !confirmPassword) {
+    if (!newPassword || !confirmPassword) { 
       setError('Please enter and confirm your new password.')
       return
     }
@@ -37,7 +34,7 @@ const ResetPasswordPage: React.FC = () => {
     setLoading(true)
     try {
       const response = await resetPassword(newPassword, token)
-    
+
       if (response.data.resetPassword.status === 200) {
         setMessage('Password reset successful! You can now log in.')
       } else {

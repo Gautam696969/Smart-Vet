@@ -34,3 +34,4 @@ export async function graphqlRequest<T = any>(
 
   return response.json();
 }
+

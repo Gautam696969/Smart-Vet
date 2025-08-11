@@ -57,6 +57,7 @@ export function graphqlRequest(query: string, variables?: any, token?: string) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         Accept: 'application/json'
       },
       data: { query, variables }
@@ -104,6 +105,20 @@ export async function forgotPassword(email: string) {
 export async function resetPassword(newPassword: string, token?: string) {
   const query = Auth.resetpassword
   const variables = { newPassword }
+
+  return graphqlRequest(query, variables, token)
+}
+
+export async function getClient(
+  tenantId: number,
+  isDeleted: boolean,
+  pageNumber: number,
+  pageSize: number,
+  searchFor: string,
+  token: string
+) {
+  const query = Auth.getClient
+  const variables = { tenantId, isDeleted, pageNumber, pageSize, searchFor }
 
   return graphqlRequest(query, variables, token)
 }
