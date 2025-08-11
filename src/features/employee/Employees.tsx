@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { FaStar, FaClock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getClient } from 'shared/utils/graphqlFetch';
-import EmployeeModal from './EmplyeeModel';
+import EmployeeModal from './EmplyeeModel'
+import { createEmployee } from 'shared/utils/graphqlFetch';
 
 type Employee = {
   id: string;
@@ -16,6 +17,7 @@ type Employee = {
   position: string;
 };
 
+
 const Employees: React.FC = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<Employee[]>( [] );
@@ -24,6 +26,39 @@ const Employees: React.FC = () => {
   const token = localStorage.getItem( 'authToken' );
   const [query, setQuery] = useState<string>( '' );
   const [search, setSearch] = useState<string>( '' );
+
+
+  // add AddEmp Model
+  const handleAddEmployee = async ( data: EmployeeFormData ) => {
+    if ( !token ) {
+      console.log( "No createEmployee token found" );
+      return;
+    }
+    try {
+      const response = await createEmployee( 2, data.firstName, data.lastName, data.email, data.phone, data.timezone, token );
+      console.log( response, "Employee added successfully" );
+      const apiData = response?.data?.getClient?.data || [];
+
+
+      const newEmployee = {
+        id: response.id,
+        name: `${data.firstName} ${data.lastName}`,
+        featured: false,
+        consulting: false,
+        avatar: '',
+        phone: data.phone,
+        view: true,
+        clock: false,
+        position: ''
+      };
+    } catch ( error ) {
+      <p>Add employee error</p>
+      console.log( error, "Error adding employee" );
+    }
+  }
+
+
+
   const filterEmployees = employees.filter( ( employee ) =>
     employee.name.toLowerCase().includes( search.toLowerCase() )
   );

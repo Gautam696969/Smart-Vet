@@ -122,3 +122,26 @@ export async function getClient(
 
   return graphqlRequest(query, variables, token)
 }
+
+
+export async function createEmployee(
+  tenantId: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  phone: string,
+  timezone: string,
+  token: string
+) {
+  const query = Auth.createEmployee
+  const variables = {
+    tenantId,
+    firstName,
+    lastName,
+    email,
+    phone,
+    timezone
+  }
+
+  return graphqlRequest(query, variables, token)
+}

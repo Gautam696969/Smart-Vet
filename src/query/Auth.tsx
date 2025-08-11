@@ -87,7 +87,7 @@ query GetClient(
 ) {
   getClient(
     tenantId: $tenantId,
-    isDeleted: $isDeleted,  
+    isDeleted: $isDeleted,
     pageNumber: $pageNumber,
     pageSize: $pageSize,
     searchFor: $searchFor
@@ -117,13 +117,28 @@ query GetClient(
 }
 `;
 
+const createEmployee = `
+mutation CreateEmployee($input: EmployeeInput!) {
+  createEmployee(input: $input) {
+    id
+    first_name
+    last_name
+    email
+    phone_number
+    position
+    timezone
+  }
+}
+`;
+
 const Auth = {
   authLogin,
   forgetPassword,
   signup,
   verifyToken,
   resetpassword,
-  getClient
+  getClient,
+  createEmployee
 }
 
 export default Auth
