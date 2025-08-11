@@ -84,6 +84,7 @@ query GetClient(
   $pageNumber: Int!,
   $pageSize: Int!,
   $searchFor: String!
+
 ) {
   getClient(
     tenantId: $tenantId,
@@ -118,16 +119,37 @@ query GetClient(
 `;
 
 const createEmployee = `
-mutation CreateEmployee($input: EmployeeInput!) {
-  createEmployee(input: $input) {
-    id
-    first_name
-    last_name
-    email
-    phone_number
-    position
-    timezone
-  }
+  mutation AddClient (
+  $tenantId: Int!,
+  $firstName: String!,
+  $lastName: String!,
+  $email: String!,
+  $phone: String!,
+  $timezone: String!
+) {
+  addClient(
+  $tenantId: Int!,
+  $firstName: String!,
+  $lastName: String!,
+  $email: String!,
+  $phone: String!,
+  $timezone: String!
+  ) {
+      message
+        firstName: "Demo22"
+        lastName: "Demo22222"
+          timezone: "America/Toronto"
+        tenantId: 2
+        addressId: ""
+        phoneNumber: "7889564523"
+        phoneNumberCountryCode: ""
+        userId: ""
+    ) {
+        message
+        status
+        data
+
+    }
 }
 `;
 

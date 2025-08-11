@@ -23,7 +23,7 @@ function EmployeeModal( { onClose, onAdd } ) {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded shadow-lg max-w-md">
         <h2 className="text-lg mb-4">Create New Employee</h2>
-
+        
         {/* Form Start */}
         <form
           onSubmit={( e ) => {

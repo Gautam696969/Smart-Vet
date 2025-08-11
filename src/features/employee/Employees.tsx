@@ -23,42 +23,57 @@ const Employees: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>( [] );
   const [loading, setLoading] = useState( true );
   const [error, setError] = useState<string | null>( null );
-  const token = localStorage.getItem( 'authToken' );
+  const authToken = localStorage.getItem( 'authToken' );
   const [query, setQuery] = useState<string>( '' );
   const [search, setSearch] = useState<string>( '' );
+  // const token = localStorage.getItem( 'token' );
 
-
-  // add AddEmp Model
-  const handleAddEmployee = async ( data: EmployeeFormData ) => {
-    if ( !token ) {
-      console.log( "No createEmployee token found" );
+  const handleAddEmployee = async (data: EmployeeFormData) => {
+  if (!token) {
+    console.log("No createEmployee token found");
+    return;
+  }
+  try {
+    const response = await createEmployee(
+      2,
+      data.firstName,
+      data.lastName,
+      data.email,
+      data.phone,
+      data.timezone,
+      token
+    );
+    console.log( "Employee added successfully", response);
+    if (!response?.data?.verifyToken?.data) {
+      console.error("No data returned from API");
       return;
     }
-    try {
-      const response = await createEmployee( 2, data.firstName, data.lastName, data.email, data.phone, data.timezone, token );
-      console.log( response, "Employee added successfully" );
-      const apiData = response?.data?.getClient?.data || [];
+    const newId = response?.data?.verifyToken?.data?.id;
 
-
-      const newEmployee = {
-        id: response.id,
-        name: `${data.firstName} ${data.lastName}`,
-        featured: false,
-        consulting: false,
-        avatar: '',
-        phone: data.phone,
-        view: true,
-        clock: false,
-        position: ''
-      };
-    } catch ( error ) {
-      <p>Add employee error</p>
-      console.log( error, "Error adding employee" );
+    if (!newId) {
+      console.error("No ID returned from API");
+      return;
     }
+
+    const newEmployee: Employee = {
+      id: newId,
+      name: `${data.firstName} ${data.lastName}`,
+      featured: false,
+      consulting: false,
+      avatar: '',
+      phone: data.phone,
+      view: true,
+      clock: false,
+      position: ''
+    };
+    
+    setEmployees((prev) => [...prev, newEmployee]);
+
+  } catch (error) {
+    console.error("Error adding employee", error);
+    setError("Failed to add employee"); // now it will show in UI
   }
-
-
-
+};
   const filterEmployees = employees.filter( ( employee ) =>
     employee.name.toLowerCase().includes( search.toLowerCase() )
   );
@@ -81,13 +96,13 @@ const Employees: React.FC = () => {
   };
 
   const fetchEmployees = async () => {
-    if ( !token ) {
+    if ( !authToken ) {
       setError( 'Token is not passed.' );
       return;
     }
 
     try {
-      const res = await getClient( 2, false, 1, 20, '', token );
+      const res = await getClient( 2, false, 1, 20, '', authToken );
       console.log( 'API Response:', res );
       const apiData = res?.data?.getClient?.data || [];
       const mappedEmployees = mapApiToEmployees( apiData );
