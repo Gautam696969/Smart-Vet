@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import Auth from '../../query/Auth'
+import { Phone } from 'lucide-react'
+import { N } from 'vitest/dist/reporters-w_64AS5f.js'
 
 export const GRAPHQL_ENDPOINT =
   import.meta.env.VITE_REACT_APP_GRAPHQL_ENDPOINT ||
@@ -129,9 +131,11 @@ export async function createEmployee(
   firstName: string,
   lastName: string,
   email: string,
-  phone: string,
   timezone: string,
-  token: string
+  token: string,
+  phone: number,
+  userId: string,
+
 ) {
   const query = Auth.createEmployee
   const variables = {
@@ -139,8 +143,10 @@ export async function createEmployee(
     firstName,
     lastName,
     email,
+    timezone,
+    token,
     phone,
-    timezone
+    userId
   }
 
   return graphqlRequest(query, variables, token)

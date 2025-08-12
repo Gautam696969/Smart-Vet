@@ -117,41 +117,29 @@ query GetClient(
   }
 }
 `;
-
 const createEmployee = `
-  mutation AddClient (
+mutation AddClient(
   $tenantId: Int!,
   $firstName: String!,
   $lastName: String!,
   $email: String!,
-  $phone: String!,
-  $timezone: String!
+  $timezone: String!,
+  $userId: String!
 ) {
   addClient(
-  $tenantId: Int!,
-  $firstName: String!,
-  $lastName: String!,
-  $email: String!,
-  $phone: String!,
-  $timezone: String!
+    tenantId: $tenantId,
+    firstName: $firstName,
+    lastName: $lastName,
+    email: $email,
+    timezone: $timezone,
+    userId: $userId
   ) {
-      message
-        firstName: "Demo22"
-        lastName: "Demo22222"
-          timezone: "America/Toronto"
-        tenantId: 2
-        addressId: ""
-        phoneNumber: "7889564523"
-        phoneNumberCountryCode: ""
-        userId: ""
-    ) {
-        message
-        status
-        data
-
-    }
+    message
+    status
+  }
 }
 `;
+
 
 const Auth = {
   authLogin,
