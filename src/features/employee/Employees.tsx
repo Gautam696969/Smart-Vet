@@ -5,6 +5,7 @@ import { createEmployee, getClient } from 'shared/utils/graphqlFetch';
 import EmployeeModal from './EmplyeeModel';
 
 
+
 type Employee = {
   id: string;
   name: string;
@@ -21,21 +22,23 @@ type Employee = {
   view: boolean;
   clock: boolean;
   position: string;
+  tanateId : string
+
 };
 
 const Employees: React.FC = () => {
   const navigate = useNavigate();
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const authToken = localStorage.getItem('authToken');
+  const [employees, setEmployees] = useState<Employee[]>( [] );
+  const [loading, setLoading] = useState( true );
+  const [error, setError] = useState<string | null>( null );
+  const authToken = localStorage.getItem( 'authToken' );
   const token = authToken || '';
-  const [query, setQuery] = useState<string>('');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>( '' );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>( false );
 
   // Map API response to Employee[]
-  const mapApiToEmployees = (apiData: any[]): Employee[] => {
-    return apiData.map((emp) => ({
+  const mapApiToEmployees = ( apiData: any[] ): Employee[] => {
+    return apiData.map( ( emp ) => ( {
       id: emp.id,
       name: emp.name || `${emp.first_name || ''} ${emp.last_name || ''}`.trim(),
       firstName: emp.first_name || '',
@@ -51,40 +54,40 @@ const Employees: React.FC = () => {
       view: true,
       clock: false,
       position: emp.position || emp.profession || '',
-    }));
+    } ) );
   };
 
   // Fetch employees from API
   const fetchEmployees = async () => {
-    if (!token) {
-      setError('Token is not passed.');
-      setLoading(false);
+    if ( !token ) {
+      setError( 'Token is not passed.' );
+      setLoading( false );
       return;
     }
 
     try {
-      const res = await getClient(2, false, 1, 20, '', token);
-      console.log('API Response:', res);
+      const res = await getClient( 2, false, 1, 20, '', token );
+      console.log( 'API Response:', res );
       const apiData = res?.data?.getClient?.data || [];
-      const mappedEmployees = mapApiToEmployees(apiData);
-      setEmployees(mappedEmployees);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to load employees');
+      const mappedEmployees = mapApiToEmployees( apiData );
+      setEmployees( mappedEmployees );
+    } catch ( err ) {
+      console.error( err );
+      setError( 'Failed to load employees' );
     } finally {
-      setLoading(false);
+      setLoading( false );
     }
   };
 
-  useEffect(() => {
+  useEffect( () => {
     fetchEmployees();
-  }, []);
+  }, [] );
 
   // Handle add employee
-  const handleAddEmployee = async (data: Employee) => {
+  const handleAddEmployee = async ( data: Employee ) => {
     const { firstName, lastName, email, phone, timezone } = data;
-    const userData = localStorage.getItem(' ');
-    const userId = JSON.parse(userData)
+    const userData = localStorage.getItem( 'user ' );
+    const userId = JSON.parse( userData )
     try {
       const response = await createEmployee(
         2,
@@ -96,27 +99,25 @@ const Employees: React.FC = () => {
         phone,
         userId?.id || 'user-id-placeholder'
       );
-      console.log('Employee created:', response);
+      console.log( 'Employee created:', response );
 
 
 
       // Optionally fetch updated employees list
       fetchEmployees();
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Error creating employee:', error);
+      setIsModalOpen( false );
+    } catch ( error ) {
+      console.error( 'Error creating employee:', error );
     }
   };
 
 
 
-
-
-  if (loading) {
+  if ( loading ) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
-  if (error) {
+  if ( error ) {
     return (
       <div className="min-h-screen flex items-center justify-center text-red-500">
         {error}
@@ -129,7 +130,7 @@ const Employees: React.FC = () => {
       <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <button
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsModalOpen( true )}
         >
           New Employee
         </button>
@@ -137,15 +138,15 @@ const Employees: React.FC = () => {
           type="text"
           placeholder="Search employees..."
           value={query}
-          onChange={(e) => setQuery(e.target.value.toLowerCase())}
+          onChange={( e ) => setQuery( e.target.value.toLowerCase() )}
           className="p-2 border rounded w-2/4 mx-auto border-green-400"
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {employees
-          .filter((employee) => employee.name.toLowerCase().includes(query))
-          .map((emp) => (
+          .filter( ( employee ) => employee.name.toLowerCase().includes( query ) )
+          .map( ( emp ) => (
             <div
               key={emp.id}
               className="bg-white shadow rounded-lg flex flex-col justify-between hover:shadow-xl transition-all"
@@ -162,7 +163,7 @@ const Employees: React.FC = () => {
                   )}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center">
+                  <div className="flex items-center ">
                     <span className="font-semibold text-lg">{emp.name}</span>
                     {emp.featured && <FaStar className="text-red-500 ml-2" />}
                   </div>
@@ -174,35 +175,40 @@ const Employees: React.FC = () => {
               {/* Tags */}
               <div className="flex gap-2 px-4 py-3 border-b">
                 <span
-                  className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                    emp.featured ? 'bg-gray-300 text-gray-700' : 'bg-gray-300 text-gray-700 opacity-50'
-                  }`}
+                  className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${emp.featured ? 'bg-gray-300 text-gray-700' : 'bg-gray-300 text-gray-700 opacity-50'
+                    }`}
                 >
                   Featured <FaStar className="ml-1 text-gray-500" />
                 </span>
                 <span
-                  className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                    emp.consulting ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700 opacity-50'
-                  }`}
+                  className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${emp.consulting ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700 opacity-50'
+                    }`}
                 >
                   Consulting User <FaStar className="ml-1" />
                 </span>
               </div>
 
               {/* View Button */}
-              <div className="px-4 py-3 text-right">
+              <div className="px-4 py-3 text-center bg-green-500 hover:bg-green-900 hover:cursor-pointer">
                 <button
-                  className="text-gray-700 font-semibold hover:underline"
-                  onClick={() => navigate(`/employees/${emp.id}`)}
+                  className="text-white font-semibold w-full "
+                  onClick={() => navigate( `/employees/${emp.id}`,
+                    {
+                      state: {
+
+                        userId: emp.userId,
+                        token: emp.token
+                      },
+                    } )}
                 >
                   VIEW
                 </button>
               </div>
             </div>
-          ))}
+          ) )}
       </div>
 
-      {isModalOpen && <EmployeeModal onClose={() => setIsModalOpen(false)} onSubmit={handleAddEmployee} />}
+      {isModalOpen && <EmployeeModal onClose={() => setIsModalOpen( false )} onSubmit={handleAddEmployee} />}
     </div>
   );
 };

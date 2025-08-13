@@ -59,7 +59,7 @@ export function graphqlRequest(query: string, variables?: any, token?: string) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         Accept: 'application/json'
       },
       data: { query, variables }
@@ -125,7 +125,6 @@ export async function getClient(
   return graphqlRequest(query, variables, token)
 }
 
-
 export async function createEmployee(
   tenantId: number,
   firstName: string,
@@ -134,8 +133,7 @@ export async function createEmployee(
   timezone: string,
   token: string,
   phone: number,
-  userId: string,
-
+  userId: string
 ) {
   const query = Auth.createEmployee
   const variables = {
@@ -151,3 +149,15 @@ export async function createEmployee(
 
   return graphqlRequest(query, variables, token)
 }
+
+export async function employeeDetails(id: string, token: string) {
+  const query = Auth.employeeDetails
+  const variables = {
+    id ,
+    token
+  }
+  return graphqlRequest(query, variables, token)
+}
+
+
+

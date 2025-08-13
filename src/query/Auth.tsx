@@ -124,7 +124,8 @@ mutation AddClient(
   $lastName: String!,
   $email: String!,
   $timezone: String!,
-  $userId: String!
+  $userId: String!,
+
 ) {
   addClient(
     tenantId: $tenantId,
@@ -132,7 +133,9 @@ mutation AddClient(
     lastName: $lastName,
     email: $email,
     timezone: $timezone,
-    userId: $userId
+    userId: $userId,
+
+
   ) {
     message
     status
@@ -140,6 +143,33 @@ mutation AddClient(
 }
 `;
 
+const employeeDetails = `query GetEmployeeDetails($id: String!) {
+  getClientDetailsById(id: $id) {
+    errorCode
+        errorMessage
+        message
+        status
+        data {
+            address_id
+            created_at
+            deleted_at
+            email
+            first_name
+            id
+            last_name
+            name
+            phone_number
+            phone_number_country_code
+            tenant_id
+            timezone
+            updated_at
+            user_id
+            id_number
+
+    }
+  }
+}
+`;
 
 const Auth = {
   authLogin,
@@ -148,7 +178,8 @@ const Auth = {
   verifyToken,
   resetpassword,
   getClient,
-  createEmployee
+  createEmployee,
+  employeeDetails
 }
 
 export default Auth

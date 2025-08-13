@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 interface EmployeeModalProps {
   onClose: () => void;
   onSubmit: ( data: {
@@ -12,12 +13,14 @@ interface EmployeeModalProps {
 }
 
 const EmployeeModal: React.FC<EmployeeModalProps> = ( { onClose, onSubmit } ) => {
-  console.log('test', onSubmit)
+  console.log( 'test', onSubmit )
   const [firstName, setFirstName] = useState( "" );
   const [lastName, setLastName] = useState( "" );
   const [email, setEmail] = useState( "" );
   const [phone, setPhone] = useState( "" );
   const [timezone, setTimezone] = useState( "" );
+
+
 
   const handleSubmit = () => {
     onSubmit( { firstName, lastName, email, phone, timezone } );
@@ -55,7 +58,12 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ( { onClose, onSubmit } ) =>
           type="text"
           placeholder="Phone"
           value={phone}
-          onChange={( e ) => setPhone( e.target.value )}
+          onChange={( e ) => {
+            let value = e.target.value;
+            if ( /^[0-9]{0,10}$/.test( value ) ) {
+              setPhone( value );
+            }
+          }}
           className="border p-2 w-full mb-3"
         />
         <select

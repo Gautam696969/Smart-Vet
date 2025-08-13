@@ -1,0 +1,6 @@
+ setProfile({
+          name: emp.name,
+          email: emp.email,
+          avatar: emp.avatar || "https://via.placeholder.com/150",
+          availability: emp.availability || "No availability info",
+        });
