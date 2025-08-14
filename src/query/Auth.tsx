@@ -165,7 +165,6 @@ const employeeDetails = `query GetEmployeeDetails($id: String!) {
             updated_at
             user_id
             id_number
-
     }
   }
 }

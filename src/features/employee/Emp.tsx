@@ -11,47 +11,47 @@ type EmployeeProfile = {
 
 export default function Emp() {
   const { state } = useLocation();
-  const [profile, setProfile] = useState<EmployeeProfile | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [profile, setProfile] = useState<EmployeeProfile | null>( null );
+  const [loading, setLoading] = useState( false );
+  const [error, setError] = useState( "" );
+  const [isOpen, setIsOpen] = useState( false );
 
-  useEffect(() => {
-    if (!state) return;
+  useEffect( () => {
+    if ( !state ) return;
 
-    const authToken = localStorage.getItem("authToken") || "";
+    const authToken = localStorage.getItem( "authToken" ) || "";
 
     const fetchEmployee = async () => {
-      setLoading(true);
+      setLoading( true );
       try {
 
-        const res = await employeeDetails(state.userId, authToken );
-        console.log(res, "API response");
-        console.log(state.userId , "state.userId");
+        const res = await employeeDetails( state.userId, authToken );
+        console.log( res, "API response" );
+        console.log( state.userId, "state.userId" );
 
         const empData = res?.data?.getUserDetails;
-        if (empData) {
-          setProfile({
+        if ( empData ) {
+          setProfile( {
             name: `${empData.firstName} ${empData.lastName}`,
             email: empData.email,
             avatar: empData.avatar,
             availability: empData.availability,
-          });
+          } );
         }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load employee details");
+      } catch ( err ) {
+        console.error( err );
+        setError( "Failed to load employee details" );
       } finally {
-        setLoading(false);
+        setLoading( false );
       }
     };
 
     fetchEmployee();
-  }, [state]);
+  }, [state] );
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
-  if (!profile) return null;
+  if ( loading ) return <p className="text-center mt-10">Loading...</p>;
+  if ( error ) return <p className="text-red-500">{error}</p>;
+  if ( !profile ) return null;
 
   return (
     <div className="p-6 font-sans bg-gray-100 min-h-screen">
@@ -82,16 +82,15 @@ export default function Emp() {
       <div className="bg-white rounded shadow p-4 mt-4">
         <div
           className="flex items-center justify-between cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen( !isOpen )}
         >
           <div className="flex items-center gap-2">
             <span className="text-orange-500 text-lg">⏳</span>
             <strong>Availability</strong>
           </div>
           <span
-            className={`text-orange-500 transform transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`text-orange-500 transform transition-transform ${isOpen ? "rotate-180" : ""
+              }`}
           >
             ▼
           </span>

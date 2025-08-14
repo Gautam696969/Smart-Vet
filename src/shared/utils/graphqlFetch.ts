@@ -153,11 +153,8 @@ export async function createEmployee(
 export async function employeeDetails(id: string, token: string) {
   const query = Auth.employeeDetails
   const variables = {
-    id ,
+    id,
     token
   }
   return graphqlRequest(query, variables, token)
 }
-
-
-

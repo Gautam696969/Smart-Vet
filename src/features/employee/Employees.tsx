@@ -5,7 +5,6 @@ import { createEmployee, getClient } from 'shared/utils/graphqlFetch';
 import EmployeeModal from './EmplyeeModel';
 
 
-
 type Employee = {
   id: string;
   name: string;
@@ -22,7 +21,7 @@ type Employee = {
   view: boolean;
   clock: boolean;
   position: string;
-  tanateId : string
+  tanateId: string
 
 };
 
@@ -96,7 +95,7 @@ const Employees: React.FC = () => {
         email,
         timezone || '',
         token || '',
-        phone,
+        phone ,
         userId?.id || 'user-id-placeholder'
       );
       console.log( 'Employee created:', response );
@@ -191,15 +190,15 @@ const Employees: React.FC = () => {
               {/* View Button */}
               <div className="px-4 py-3 text-center bg-green-500 hover:bg-green-900 hover:cursor-pointer">
                 <button
-                  className="text-white font-semibold w-full "
-                  onClick={() => navigate( `/employees/${emp.id}`,
-                    {
+                  className="text-white font-semibold w-full"
+                  onClick={() =>
+                    navigate( `/employees/${emp.id}`, {
                       state: {
-
                         userId: emp.userId,
-                        token: emp.token
+                        token: authToken
                       },
-                    } )}
+                    } )
+                  }
                 >
                   VIEW
                 </button>
